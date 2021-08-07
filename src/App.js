@@ -28,6 +28,10 @@ function App() {
       const calcTotalPages = Math.ceil(result.totalHits / imgPerPages);
       saveTotalPages(calcTotalPages)
 
+
+      // mover la vista hacia arriba cuando pasamos pagina
+      const jumbotron = document.querySelector('.jumbotron')
+      jumbotron.scrollIntoView({behavior: 'smooth'})
     }
     consultApi()
   }, [search, actualpage])
