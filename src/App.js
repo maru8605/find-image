@@ -1,10 +1,15 @@
 import './app.css'
 import {useState, useEffect} from 'react'
 import Form from './components/Form';
+import ListadoImagenes from './components/ListadoImagenes';
+
 
 function App() {
 
   const [search, saveSearch] = useState('')
+  const [imagenes, saveImages] = useState([])
+  const [actualpage, saveActualPage] = useState(1)
+  const [totalpages, saveTotalPages] = useState(1)
 
   useEffect(() => {
     
@@ -18,7 +23,10 @@ function App() {
       const respuesta = await fetch(url)
       const result =  await respuesta.json()
 
-      saveSearch(result.hits)
+      saveImages(result.hits)
+
+      const calcTotalPages = Math.ceil(result.totalHits / imgPerPages);
+      saveTotalPages(calcTotalPages)
 
     }
     consultApi()
@@ -31,6 +39,12 @@ function App() {
 
         <Form
           saveSearch={saveSearch}
+        />
+        
+      </div>
+      <div className='row justify-content-center'>
+        <ListadoImagenes
+          imagenes={imagenes}
         />
       </div>
     </div>
